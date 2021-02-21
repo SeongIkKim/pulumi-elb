@@ -62,9 +62,9 @@ ami = aws.get_ami(
     filters=[{"name": "name", "values": ["amzn-ami-hvm-*-x86_64-ebs"]}],
 )
 
-for az in aws.get_availability_zones().names:
+for i in range(4):
     server = aws.ec2.Instance(
-        f"web-server-{az}",
+        f"web-server-{i}",
         instance_type="t2.micro",
         vpc_security_group_ids=[group.id],
         ami=ami.id,
@@ -80,12 +80,11 @@ nohup python -m SimpleHTTPServer 80 &
     hostnames.append(server.public_dns)
 
     attachment = aws.lb.TargetGroupAttachment(
-        f"web-server-{az}",
+        f"web-server-{i}",
         target_group_arn=target_group.arn,
         target_id=server.private_ip,
         port=80,
     )
-
 
 pulumi.export("ips", ips)
 pulumi.export("hostnames", hostnames)
