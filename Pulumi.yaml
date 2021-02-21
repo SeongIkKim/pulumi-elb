@@ -1,0 +1,6 @@
+name: pulumi_tutorial
+runtime:
+  name: python
+  options:
+    virtualenv: venv
+description: ELB provisioning
