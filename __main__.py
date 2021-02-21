@@ -86,6 +86,11 @@ nohup python -m SimpleHTTPServer 80 &
         port=80,
     )
 
+# S3 Bucket
+# bucket = aws.s3.Bucket('my-bucket')
+
+
 pulumi.export("ips", ips)
 pulumi.export("hostnames", hostnames)
 pulumi.export("url", lb.dns_name)
+# pulumi.export('bucket_name', bucket.id)
